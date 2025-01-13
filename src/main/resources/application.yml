@@ -3,8 +3,8 @@ server:
 
 spring:
   kafka:
+    bootstrap-servers: 192.168.0.7:10000,192.168.0.7:10001,192.168.0.7:10002 # 카프카 서버 주소, Producer, Consumer 둘다 전역으로 설정. 이거 추가안하면 연결 에러 남
     producer:
-      bootstrap-servers: 192.168.0.7:10000,192.168.0.7:10001,192.168.0.7:10002 # 카프카 서버 주소
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
