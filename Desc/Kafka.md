@@ -1,5 +1,3 @@
-# Kafka
-
 ## 📚 Kafka
 
 이번에 Kafka를 공식문서를 보며 따라 구현해보고 있습니다.
@@ -37,9 +35,9 @@
 
 - RabbitMQ는 기본적으로 메시지를 Queue에서 꺼내면 삭제되고, 메시지 손실 방지를 위해 Persistent 설정을 해야 함
 - Kafka는 메시지를 디스크에 저장하며 일정 기간 유지할 수 있음.
-    - → 장애가 발생하더라도 특정 시간 이후부터 다시 메시지를 읽을 수 있음.
+  - → 장애가 발생하더라도 특정 시간 이후부터 다시 메시지를 읽을 수 있음.
 - 실수로 Consumer가 장애로 인해 메시지를 못 가져갔다면?
-    - RabbitMQ는 메시지를 복구할 수 없지만, Kafka는 그대로 남아 있어서 다시 처리 가능.
+  - RabbitMQ는 메시지를 복구할 수 없지만, Kafka는 그대로 남아 있어서 다시 처리 가능.
 
 <br>
 
@@ -74,8 +72,8 @@
 - `KAFKA_ENABLE_KRAFT=yes`로 설장하면 활성화되며 Kafka 브로커들이 스스로 클러스터를 관리하고 메타데이터를 유지함
 - 이 모드에서는 Kafka 브로커가 클러스터의 구성과 상태를 관리하는 `컨트롤러 쿼럼` 역할을 수항하며, 데이터의 저장과 전송을 담당하는 `브로커`의 역할을 동시에 수행함
 - **컨트롤러 쿼럼을 통한 고가용성** : `KAFKA_CFG_CONTROLLER_QUORUM_VOTERS` env 변수는 KRaft 모드에서 각 브로커가 컨트롤러 쿼럼에 참여하도록 설정한다.
-    - 이 변수는 클러스터의 메타데이터 변경 작업(리더 선출, 파티션 이동 등등)을 처리하는 브로커들 사이의 투표를 통해 합의를 이룰 수 있게 한다.
-    - 이 설정을 통해 클러스터의 메타데이터의 일관성을 보장한다.
+  - 이 변수는 클러스터의 메타데이터 변경 작업(리더 선출, 파티션 이동 등등)을 처리하는 브로커들 사이의 투표를 통해 합의를 이룰 수 있게 한다.
+  - 이 설정을 통해 클러스터의 메타데이터의 일관성을 보장한다.
 
 <br>
 
@@ -222,15 +220,15 @@ docker-compose up -d
 
 정상적으로 실행이 되었다면 총 4개의 컨테이너가 뜬 것을 볼 수 있습니다.
 
-![](./Desc/1.png)
+![](./1.png)
 
 <br>
 
 그리고 Kafka WebUI를 9090포트로 설정했으니 들어가서 브로커들이 잘 인식 되는지 확인해봅니다.
 
-![](./Desc/2.png)
+![](./2.png)
 
-![](./Desc/3.png)
+![](./3.png)
 
 ---
 
@@ -327,9 +325,9 @@ kafka-topics.sh --create --topic test-topic --partitions 15 --replication-factor
 kafka-topics.sh --list --bootstrap-server Kafka00Service:9092
 ```
 
-![](./Desc/4.png)
+![](./4.png)
 
-![](./Desc/5.png)
+![](./5.png)
 
 <br>
 
@@ -349,7 +347,7 @@ kafka-console-consumer.sh --topic test-topic --from-beginning --bootstrap-server
 
 Producer와 Consumer를 싱행하고 Producer에서 메시지를 보내면 Consumer에 바로 메시지가 도착하는 것을 볼 수 있습니다.
 
-![](./Desc/6.png)
+![](./6.png)
 
 ---
 
@@ -441,13 +439,13 @@ public class KafkaConsumer {
 
 이제 6번에 배포한 Producer 역할을 하는 Spring Boot Server를 키고 `/test` API에 GET 요청을 보내면 Kafka Producer를 통해 `test-topc`에 `Spring Message Test`라는 메시지를 발행합니다.
 
-![](./Desc/7.png)
+![](./7.png)
 
 <br>
 
 그리고 로컬 노트북의 Spring Boot Consumer 로그를 보면 test-topic에 Spring Message Test 라는 문자가 도착한 걸 볼 수 있습니다.
 
-![](./Desc/8.png)
+![](./8.png)
 
 <br>
 
